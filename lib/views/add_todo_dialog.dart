@@ -1,5 +1,6 @@
 import 'package:TodoApp/model/todo_model.dart';
 import 'package:TodoApp/reducers_thunk.dart';
+import 'package:TodoApp/until/validate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -20,6 +21,7 @@ class AddTodoDialog extends StatelessWidget {
 
 class AddTodoDialogWidget extends StatefulWidget {
   final OnAddCallback callback;
+
   AddTodoDialogWidget(this.callback);
   @override
   State<StatefulWidget> createState() => new AddTodoDialogWidgetState();
@@ -40,12 +42,7 @@ class AddTodoDialogWidgetState extends State<AddTodoDialogWidget> {
           children: <Widget>[
             Expanded(
               child: TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+                validator: (value) => Validator.validateText(value),
                 autofocus: true,
                 decoration: InputDecoration(
                     labelText: 'Note', hintText: 'Ex. this is Example'),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:TodoApp/action.dart';
 import 'package:TodoApp/model/todo_model.dart';
+import 'package:TodoApp/until/until.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 import 'package:TodoApp/shared_preferences/shared_preferences.dart' as srp;
@@ -30,6 +31,18 @@ class GetTodosThunkAction implements CallableThunkAction<List<TodoModel>> {
   }
 }
 
+class GetTodosThunkActionTest implements CallableThunkAction<List<TodoModel>> {
+  @override
+  call(Store<List<TodoModel>> store) async {
+    List<TodoModel> tdmls = store.state;
+    List<dynamic> tdmlstmp;
+
+    tdmlstmp = await parseJsonFromAssets("lib/config/mock.json");
+    tdmls = tdmlstmp.map((data) => TodoModel.fromJson(data)).toList();
+    store.dispatch(GetTodosAction(tdmls));
+  }
+}
+
 class AddTodoThunkAction implements CallableThunkAction<List<TodoModel>> {
   final TodoModel item;
   AddTodoThunkAction(this.item);
@@ -41,7 +54,20 @@ class AddTodoThunkAction implements CallableThunkAction<List<TodoModel>> {
     store.dispatch(AddTodoAction(tdmls));
   }
 }
+class AddTodoThunkActionTest implements CallableThunkAction<List<TodoModel>> {
+  final TodoModel item;
+  AddTodoThunkActionTest(this.item);
+  @override
+  call(Store<List<TodoModel>> store) async {
+    List<TodoModel> tdmls = store.state;
+    List<dynamic> tdmlstmp;
 
+    tdmlstmp = await parseJsonFromAssets("lib/config/mock.json");
+    tdmls = tdmlstmp.map((data) => TodoModel.fromJson(data)).toList();
+    tdmls.insert(0, item);
+    store.dispatch(AddTodoAction(tdmls));
+  }
+}
 class RemoveTodoThunkAction implements CallableThunkAction<List<TodoModel>> {
   final TodoModel item;
   RemoveTodoThunkAction(this.item);

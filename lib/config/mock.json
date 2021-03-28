@@ -1,0 +1,22 @@
+[
+    {
+        "id": "1616936962382780",
+        "complete": false,
+        "note": "remove some acount"
+    },
+    {
+        "id": "1616936941215432",
+        "complete": true,
+        "note": "testing with redux"
+    },
+    {
+        "id": "1616936903347564",
+        "complete": true,
+        "note": "speaking english"
+    },
+    {
+        "id": "1616936847285164",
+        "complete": false,
+        "note": "working all day"
+    }
+]
